@@ -2,6 +2,7 @@ package com.tylt.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,7 +52,8 @@ public class UserServlet extends HttpServlet {
 
 		User user = null;
 		try {
-			user = userService.selectByUserName(username);
+			user =  userService.selectByUserName(username);
+			
 			if (user != null && user.getPassWord().equals(password)) {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/success.html");
 				requestDispatcher.forward(request, response);

@@ -20,44 +20,38 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> SelectAll() throws SQLException {
-		// TODO Auto-generated method stub
-		String sql = "select _id,_username,_password from user";
+		String sql = "SELECT _id , _username , _password FROM user";
 		resu = JDBCUtil.getResult(sql);
-
 		List<User> userlist = new ArrayList<>();
 		while (resu.next()) {
-
 			User user = new User();
 			user.setId(resu.getInt("_id"));
 			user.setUserName(resu.getString("_username"));
 			user.setPassWord(resu.getString("_password"));
-
 			userlist.add(user);
 		}
-
 		JDBCUtil.getClose();
 		return userlist;
 	}
 
 	@Override
 	public User selectByUserName(String username) throws SQLException {
-		// TODO Auto-generated method stub
-		String sql = "select * from _user where username = ?";
-		List<User> usernameList = new ArrayList<>();
+		String sql = "SELECT * FROM user WHERE _username = '" + username + "'";
 		resu = JDBCUtil.getResult(sql);
+		User user = new User();
 		while (resu.next()) {
-			User user = new User();
 			user.setUserName(resu.getString("_username"));
-			usernameList.add(user);
+			user.setPassWord(resu.getString("_password"));
+			//ulist.add(user);
 		}
-		return (User) usernameList;
+		return user;
 	}
 
 	@Override
 	public boolean insert(User user) throws SQLException {
 		// TODO Auto-generated method stub
-		String sql = "insert into _user(_id,_username,_password)" + "values(" + "'" + user.getId() + "'" + "'"
-				+ user.getUserName() + "'" + "'" + user.getPassWord() + "'" + ")";
+		String sql = "insert into user(_id,_username,_password)" + "values(" + "'" + user.getId() + "','"
+				+ user.getUserName() + "','" + user.getPassWord() + "'" + ")";
 		resu = JDBCUtil.getResult(sql);
 		JDBCUtil.getClose();
 		return true;
